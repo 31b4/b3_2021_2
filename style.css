@@ -1,0 +1,10 @@
+body{
+    background-image: url("img/bck.png");
+    background-repeat: no-repeat;
+    background-attachment:fixed;
+    background-size: cover;
+}
+div#cim h1{
+    font: 40px "Roboto Mono", monospace;
+    text-align: center;
+}
