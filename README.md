@@ -1,2 +1,2 @@
 # BBB-2nd-round
-2nd
+https://bbb-2nd-round.netlify.app/
