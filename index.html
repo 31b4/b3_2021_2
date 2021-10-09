@@ -4,17 +4,20 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
     <title>demo</title>
     <script src="run.js"></script>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div id="cim">
         <h1>A mozgás-érzékelő-érzékelő</h1>
     </div>
-    <button onclick=MapGenerate(map1)>lvl 1</button>
-    <div id="matrix">
-        <table border="1" id="table"></table>
+    <div id="mainbox">
+        <button onclick=MapGenerate(map1)>lvl 1</button>
+        <p>Legközelebbi mozgás érzékelő: </p>
+        <div id="matrix">
+            <table border="1" id="table"></table>
+        </div>
     </div>
 </body>
 </html>
