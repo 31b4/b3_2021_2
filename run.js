@@ -14,6 +14,7 @@ var map1 = [//0=null, 1=erzekelo tona, 2=erzekelo, 3=strat, 4=cel
     [3,0,1,1,1,0,0,0,0,0,0,0]
 ];
 var emberPos=[11,0];
+var lepesek=0;
 function LkSzenzorTavolsag(szensorPos){// kiszamolja myilen mennsze van a legkozelebbi szenzor
     var tav;
     var yKul=Math.abs(emberPos[0]-szensorPos[0]);
@@ -31,7 +32,7 @@ function LkSzenzorTavolsag(szensorPos){// kiszamolja myilen mennsze van a legkoz
         tav = (xKul+yKul)-yKul;
     }
     console.log("tav: "+ tav)
-    return tav;
+    document.getElementById("LKME").innerHTML="Legközelebbi mozgás érzékelő: "+ tav;
 }
 function HatarSensVizsg(y,x){
     if(x>=0&&x<12&&y>=0&&y<12){
@@ -85,33 +86,33 @@ function LegkozelebbiSzenzor(szensorPos){// megkeresi a legkozelebbi szenzor kor
 function EmberMozgas(y,x){
     var ey=emberPos[0];
     var ex=emberPos[1];
-    var szensorPos = null;
     // console.log(y+","+y)
     if(y==ey-1&&x==ex || y==ey-1&&x==ex+1 || y==ey&&x==ex+1 || y == ey+1&&x==ex+1 || y==ey+1 && x==ex || y==ey+1&&x==ex-1||y==ey&&x==ex-1||y==ey-1&&x==ex-1){
+        lepesek++;
         // console.log("valid");
         var voltPos = document.getElementById(ey+","+ex);
         voltPos.innerHTML="";
         if(map1[y][x]==1){
-            alert("Beriasztott az épület, FUTÁS!");
+            alert("Beriasztott az épület, mindössze "+lepesek+" lépést sikerült megtenni :(");
             Restart();
             return;
         }
         else if(map1[y][x]==4){
-            alert("Gratulálok, feltünés nélkül bejutottál a szerver szobába!");
+            alert("Gratulálok, feltünés nélkül bejutottál a szerver szobába, mindössze "+lepesek+" lépésből!");
             Restart();
             return;
         }
         emberPos=[y,x]
         var ujPos = document.getElementById(y+","+x);
         ujPos.innerHTML=":)"
-        szensorPos=LegkozelebbiSzenzor();
-        var tav = LkSzenzorTavolsag(szensorPos);
-        document.getElementById("LKME").innerHTML="Legközelebbi mozgás érzékelő: "+ tav;
+        LkSzenzorTavolsag(LegkozelebbiSzenzor());
     }
 }
 function Restart(){
+    lepesek=0;
     emberPos=[11,0];
     document.getElementById("table").innerHTML="";
+    document.getElementById("LKME").innerHTML="Legközelebbi mozgás érzékelő: ";
 }
 function MapGenerate(map){
     var table = document.getElementById("table");
@@ -145,5 +146,6 @@ function MapGenerate(map){
             tr.appendChild(td);
         }
       table.appendChild(tr);  
-    } 
+    }
+    LkSzenzorTavolsag(LegkozelebbiSzenzor());
 }
