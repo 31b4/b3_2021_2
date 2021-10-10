@@ -15,6 +15,11 @@ var map1 = [//0=null, 1=erzekelo tona, 2=erzekelo, 3=strat, 4=cel
 ];
 var emberPos=[11,0];
 var lepesek=0;
+function ExtraHelp(){
+    var szensorPos = LegkozelebbiSzenzor()
+    document.getElementById(szensorPos[0]+","+szensorPos[1]).style.backgroundColor="blue";
+    document.getElementById("xtrBTN").remove();
+}
 function LkSzenzorTavolsag(szensorPos){// kiszamolja myilen mennsze van a legkozelebbi szenzor
     var tav;
     var yKul=Math.abs(emberPos[0]-szensorPos[0]);
@@ -42,7 +47,8 @@ function HatarSensVizsg(y,x){
     }
     return false;
 }
-function LegkozelebbiSzenzor(szensorPos){// megkeresi a legkozelebbi szenzor kordinatajat pl:[3,8]
+function LegkozelebbiSzenzor(){// megkeresi a legkozelebbi szenzor kordinatajat pl:[3,8]
+    var szensorPos;
     var y = emberPos[0]-1;
     var x = emberPos[1]-1;
     for (let i = 2; i < 11; i++) {
@@ -113,8 +119,12 @@ function Restart(){
     emberPos=[11,0];
     document.getElementById("table").innerHTML="";
     document.getElementById("LKME").innerHTML="Legközelebbi mozgás érzékelő: ";
+    if (document.getElementById("xtrBTN")!=null) {
+        document.getElementById("xtrBTN").remove();
+    }
 }
 function MapGenerate(map){
+    var matrix = document.getElementById("matrix");
     var table = document.getElementById("table");
     Restart();
     for (let i = 0; i < 12; i++) {
@@ -147,5 +157,10 @@ function MapGenerate(map){
         }
       table.appendChild(tr);  
     }
+    var btn = document.createElement("button");
+    btn.id="xtrBTN";
+    btn.onclick = function(){ExtraHelp()};
+    btn.innerHTML="Extra help";
+    matrix.appendChild(btn);
     LkSzenzorTavolsag(LegkozelebbiSzenzor());
 }
