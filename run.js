@@ -14,11 +14,79 @@ var map1 = [//0=null, 1=erzekelo tona, 2=erzekelo, 3=strat, 4=cel
     [3,0,1,1,1,0,0,0,0,0,0,0]
 ];
 var emberPos=[11,0];
-
+function LkSzenzorTavolsag(szensorPos){// kiszamolja myilen mennsze van a legkozelebbi szenzor
+    var tav;
+    var yKul=Math.abs(emberPos[0]-szensorPos[0]);
+    var xKul=Math.abs(emberPos[1]-szensorPos[1]);
+    if (szensorPos[0]==emberPos[0]) {
+        tav = xKul;
+    }
+    else if(szensorPos[1]==emberPos[1]){
+        tav = yKul;
+    }
+    else if (xKul <= yKul) {
+        tav = (xKul+yKul)-xKul;
+    }
+    else if (yKul <= xKul) {
+        tav = (xKul+yKul)-yKul;
+    }
+    console.log("tav: "+ tav)
+    return tav;
+}
+function HatarSensVizsg(y,x){
+    if(x>=0&&x<12&&y>=0&&y<12){
+        if (map1[y][x]==2) {
+            return true;
+        }
+    }
+    return false;
+}
+function LegkozelebbiSzenzor(szensorPos){// megkeresi a legkozelebbi szenzor kordinatajat pl:[3,8]
+    var y = emberPos[0]-1;
+    var x = emberPos[1]-1;
+    for (let i = 2; i < 11; i++) {
+        y -= 1;
+        x -= 1;
+        if(HatarSensVizsg(y,x)){
+                szensorPos=[y,x];
+                return szensorPos;
+        }
+        // ---------------- ATIRASRA VAR ---------------
+        for (let j = 0; j < i*2; j++) {
+            x++;
+            if (HatarSensVizsg(y,x)) {
+                szensorPos=[y,x];
+                return szensorPos;
+            }
+        }
+        for (let j = 0; j < i*2; j++) {
+            y++;
+            if (HatarSensVizsg(y,x)) {
+                szensorPos=[y,x];
+                return szensorPos;
+            }   
+        }
+        for (let j = 0; j < i*2; j++) {
+            x--;
+            if (HatarSensVizsg(y,x)) {
+                szensorPos=[y,x];
+                return szensorPos;
+            }
+        }
+        for (let j = 0; j < i*2; j++) {
+            y--;
+            if (HatarSensVizsg(y,x)) {
+                szensorPos=[y,x];
+                return szensorPos;
+            }
+        }
+    }
+}
 function EmberMozgas(y,x){
     var ey=emberPos[0];
     var ex=emberPos[1];
-    // console.log(x+","+y)
+    var szensorPos = null;
+    // console.log(y+","+y)
     if(y==ey-1&&x==ex || y==ey-1&&x==ex+1 || y==ey&&x==ex+1 || y == ey+1&&x==ex+1 || y==ey+1 && x==ex || y==ey+1&&x==ex-1||y==ey&&x==ex-1||y==ey-1&&x==ex-1){
         // console.log("valid");
         var voltPos = document.getElementById(ey+","+ex);
@@ -36,6 +104,9 @@ function EmberMozgas(y,x){
         emberPos=[y,x]
         var ujPos = document.getElementById(y+","+x);
         ujPos.innerHTML=":)"
+        szensorPos=LegkozelebbiSzenzor();
+        var tav = LkSzenzorTavolsag(szensorPos);
+        document.getElementById("LKME").innerHTML="Legközelebbi mozgás érzékelő: "+ tav;
     }
 }
 function Restart(){
