@@ -1,5 +1,18 @@
-
-var map1 = [//0=null, 1=erzekelo tona, 2=erzekelo, 3=strat, 4=cel
+var map1 = [// 0=null, 1=erzekelo tona, 2=erzekelo, 3=strat, 4=cel
+    [0,0,0,0,0,0,1,1,1,0,0,4],
+    [1,1,1,1,1,1,1,2,1,0,0,0],
+    [1,2,1,1,2,1,1,1,1,0,0,0],
+    [1,1,1,1,1,1,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,1,1],
+    [0,1,1,1,0,0,0,0,0,0,1,2],
+    [0,1,2,1,0,0,0,0,0,0,1,1],
+    [0,1,1,1,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,1,1,1,0,0],
+    [0,0,0,0,0,0,0,1,2,1,1,1],
+    [0,0,0,0,0,0,0,1,1,1,2,1],
+    [3,0,0,0,0,0,0,0,0,1,1,1]
+];
+var map2 = [
     [1,1,0,0,0,0,1,1,1,0,0,4],
     [2,1,0,1,1,1,1,2,1,0,0,0],
     [1,1,0,1,2,1,1,1,1,0,0,0],
@@ -13,10 +26,38 @@ var map1 = [//0=null, 1=erzekelo tona, 2=erzekelo, 3=strat, 4=cel
     [0,0,1,2,1,0,0,1,1,1,0,0],
     [3,0,1,1,1,0,0,0,0,0,0,0]
 ];
+var map3 = [
+    [1,1,0,0,0,0,1,1,1,0,0,4],
+    [2,1,0,1,1,1,1,2,1,0,0,0],
+    [1,1,0,1,2,1,2,1,1,0,0,0],
+    [0,0,0,1,1,1,1,1,0,1,1,1],
+    [0,0,0,0,0,0,0,0,0,1,2,1],
+    [0,1,1,1,0,1,1,1,0,1,1,1],
+    [0,1,2,1,0,1,2,1,0,0,0,0],
+    [0,1,1,1,0,1,1,1,0,0,0,0],
+    [0,0,0,0,0,1,1,1,0,1,1,1],
+    [0,1,1,1,1,1,2,1,0,1,2,1],
+    [0,1,2,2,1,1,1,1,0,1,1,1],
+    [3,1,1,1,1,0,0,0,0,0,0,0]
+];
+var map4 = [
+    [1,1,0,0,0,0,1,1,2,1,0,4],
+    [2,1,0,1,1,1,1,2,1,1,0,0],
+    [1,1,0,1,2,1,2,1,1,0,1,1],
+    [0,0,0,1,1,2,1,1,0,1,1,2],
+    [0,0,1,1,2,1,1,0,1,1,2,1],
+    [0,1,1,2,1,1,0,1,1,2,1,2],
+    [1,1,2,1,1,0,1,1,2,1,1,1],
+    [1,2,1,1,0,1,1,2,1,1,0,0],
+    [1,1,1,0,1,1,2,1,1,1,0,0],
+    [0,0,0,1,1,2,1,1,2,1,0,0],
+    [0,0,0,1,2,1,1,1,1,1,0,0],
+    [3,0,0,1,1,1,0,0,0,0,0,0]
+];
 var emberPos=[11,0];
 var lepesek=0;
-function ExtraHelp(){
-    var szensorPos = LegkozelebbiSzenzor()
+function ExtraHelp(map){
+    var szensorPos = LegkozelebbiSzenzor(map)
     document.getElementById(szensorPos[0]+","+szensorPos[1]).style.backgroundColor="blue";
     document.getElementById("xtrBTN").remove();
 }
@@ -39,57 +80,57 @@ function LkSzenzorTavolsag(szensorPos){// kiszamolja myilen mennsze van a legkoz
     console.log("tav: "+ tav)
     document.getElementById("LKME").innerHTML="Legközelebbi mozgás érzékelő: "+ tav;
 }
-function HatarSensVizsg(y,x){
+function HatarSensVizsg(y,x,map){
     if(x>=0&&x<12&&y>=0&&y<12){
-        if (map1[y][x]==2) {
+        if (map[y][x]==2) {
             return true;
         }
     }
     return false;
 }
-function LegkozelebbiSzenzor(){// megkeresi a legkozelebbi szenzor kordinatajat pl:[3,8]
+function LegkozelebbiSzenzor(map){// megkeresi a legkozelebbi szenzor kordinatajat pl:[3,8]
     var szensorPos;
     var y = emberPos[0]-1;
     var x = emberPos[1]-1;
     for (let i = 2; i < 11; i++) {
         y -= 1;
         x -= 1;
-        if(HatarSensVizsg(y,x)){
+        if(HatarSensVizsg(y,x,map)){
                 szensorPos=[y,x];
                 return szensorPos;
         }
         // ---------------- ATIRASRA VAR ---------------
         for (let j = 0; j < i*2; j++) {
             x++;
-            if (HatarSensVizsg(y,x)) {
+            if (HatarSensVizsg(y,x,map)) {
                 szensorPos=[y,x];
                 return szensorPos;
             }
         }
         for (let j = 0; j < i*2; j++) {
             y++;
-            if (HatarSensVizsg(y,x)) {
+            if (HatarSensVizsg(y,x,map)) {
                 szensorPos=[y,x];
                 return szensorPos;
             }   
         }
         for (let j = 0; j < i*2; j++) {
             x--;
-            if (HatarSensVizsg(y,x)) {
+            if (HatarSensVizsg(y,x,map)) {
                 szensorPos=[y,x];
                 return szensorPos;
             }
         }
         for (let j = 0; j < i*2; j++) {
             y--;
-            if (HatarSensVizsg(y,x)) {
+            if (HatarSensVizsg(y,x,map)) {
                 szensorPos=[y,x];
                 return szensorPos;
             }
         }
     }
 }
-function EmberMozgas(y,x){
+function EmberMozgas(y,x,map){
     var ey=emberPos[0];
     var ex=emberPos[1];
     // console.log(y+","+y)
@@ -98,12 +139,12 @@ function EmberMozgas(y,x){
         // console.log("valid");
         var voltPos = document.getElementById(ey+","+ex);
         voltPos.innerHTML="";
-        if(map1[y][x]==1){
+        if(map[y][x]==1){
             alert("Beriasztott az épület, mindössze "+lepesek+" lépést sikerült megtenni :(");
             Restart();
             return;
         }
-        else if(map1[y][x]==4){
+        else if(map[y][x]==4){
             alert("Gratulálok, feltünés nélkül bejutottál a szerver szobába, mindössze "+lepesek+" lépésből!");
             Restart();
             return;
@@ -111,14 +152,16 @@ function EmberMozgas(y,x){
         emberPos=[y,x]
         var ujPos = document.getElementById(y+","+x);
         ujPos.innerHTML=":)"
-        LkSzenzorTavolsag(LegkozelebbiSzenzor());
+        LkSzenzorTavolsag(LegkozelebbiSzenzor(map));
     }
 }
 function Restart(){
     lepesek=0;
     emberPos=[11,0];
     document.getElementById("table").innerHTML="";
-    document.getElementById("LKME").innerHTML="Legközelebbi mozgás érzékelő: ";
+    if (document.getElementById("LKME")!=null) {
+        document.getElementById("LKME").remove();
+    }
     if (document.getElementById("xtrBTN")!=null) {
         document.getElementById("xtrBTN").remove();
     }
@@ -126,6 +169,7 @@ function Restart(){
 function MapGenerate(map){
     var matrix = document.getElementById("matrix");
     var table = document.getElementById("table");
+    var lkmeDiv = document.getElementById("LKMEdiv");
     Restart();
     for (let i = 0; i < 12; i++) {
         var tr = document.createElement("tr");
@@ -133,11 +177,12 @@ function MapGenerate(map){
             var td = document.createElement("td");
             td.style.color="white";
             td.style.textAlign="center";
-            td.style.width="40px";
-            td.style.height="40px";
+            td.style.width="20px ";
+            td.style.height="20px";
+            td.style.setProperty("border","1","important");;
             td.id=i+","+j; // pl: 0,0
             
-            td.onclick = function(){EmberMozgas(i,j)};
+            td.onclick = function(){EmberMozgas(i,j,map)};
             if(map[i][j]==1 ||map[i][j]==2){
                 td.style.backgroundColor="red";
                 if(map[i][j]==2){
@@ -159,8 +204,15 @@ function MapGenerate(map){
     }
     var btn = document.createElement("button");
     btn.id="xtrBTN";
-    btn.onclick = function(){ExtraHelp()};
+    btn.onclick = function(){ExtraHelp(map)};
     btn.innerHTML="Extra help";
     matrix.appendChild(btn);
-    LkSzenzorTavolsag(LegkozelebbiSzenzor());
+    var lkme = document.createElement("p");
+    lkme.innerHTML="Legközelebbi mozgás érzékelő: ";
+    lkme.id="LKME";
+    lkmeDiv.appendChild(lkme);
+    LkSzenzorTavolsag(LegkozelebbiSzenzor(map));
+}
+function Valami(){
+    console.log("hamarosan kész...");
 }

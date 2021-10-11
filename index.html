@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>demo</title>
+    
     <script src="run.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
@@ -13,11 +14,17 @@
         <h1>A mozgás-érzékelő-érzékelő</h1>
     </div>
     <div id="mainbox">
-        <button onclick=MapGenerate(map1)>lvl 1</button>
-        <p id="LKME">Legközelebbi mozgás érzékelő: </p>
+        <div class="row">
+            <div class="col"><button onclick=MapGenerate(map1)>lvl 1</button></div>
+            <div class="col"><button onclick=MapGenerate(map2)>lvl 2</button></div>
+            <div class="col"><button onclick=Valami() style="width: 84px;">Utmutató</button></div>
+            <div class="col"><button onclick=MapGenerate(map3)>lvl 3</button></div>
+            <div class="col"><button onclick=MapGenerate(map4)>lvl 4</button></div>
+        </div>
+        <div id="LKMEdiv"></div>
         <div id="matrix">
             <table border="1" id="table"></table>
         </div>
     </div>
 </body>
-</html>
+</html

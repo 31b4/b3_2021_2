@@ -28,6 +28,7 @@ div#matrix{
     margin: auto auto;
     display: flex;
     align-items: center;
+    text-align: center;
 }
 #mainbox p{
     text-align: center;
