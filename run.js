@@ -1,4 +1,4 @@
-var map1 = [// 0=null, 1=erzekelo tona, 2=erzekelo, 3=strat, 4=cel
+var map1 = [// 0=null, 1=erzekelo zona, 2=erzekelo, 3=strat, 4=cel
     [0,0,0,0,0,0,1,1,1,0,0,4],
     [1,1,1,1,1,1,1,2,1,0,0,0],
     [1,2,1,1,2,1,1,1,1,0,0,0],
@@ -72,10 +72,10 @@ function LkSzenzorTavolsag(szensorPos){// kiszamolja myilen mennsze van a legkoz
         tav = yKul;
     }
     else if (xKul <= yKul) {
-        tav = (xKul+yKul)-xKul;
+        tav = yKul;
     }
     else if (yKul <= xKul) {
-        tav = (xKul+yKul)-yKul;
+        tav = xKul;
     }
     console.log("tav: "+ tav)
     document.getElementById("LKME").innerHTML="Legközelebbi mozgás érzékelő: "+ tav;
@@ -96,8 +96,8 @@ function LegkozelebbiSzenzor(map){// megkeresi a legkozelebbi szenzor kordinataj
         y -= 1;
         x -= 1;
         if(HatarSensVizsg(y,x,map)){
-                szensorPos=[y,x];
-                return szensorPos;
+            szensorPos=[y,x];
+            return szensorPos;
         }
         // ---------------- ATIRASRA VAR ---------------
         for (let j = 0; j < i*2; j++) {
@@ -135,7 +135,7 @@ function EmberMozgas(y,x,map){
     var ex=emberPos[1];
     // console.log(y+","+y)
     if(y==ey-1&&x==ex || y==ey-1&&x==ex+1 || y==ey&&x==ex+1 || y == ey+1&&x==ex+1 || y==ey+1 && x==ex || y==ey+1&&x==ex-1||y==ey&&x==ex-1||y==ey-1&&x==ex-1){
-        lepesek++;
+        lepesek++;// maradekos osztassal megcsinalni vagy mint az aknakereso
         // console.log("valid");
         var voltPos = document.getElementById(ey+","+ex);
         voltPos.innerHTML="";
@@ -177,16 +177,16 @@ function MapGenerate(map){
             var td = document.createElement("td");
             td.style.color="white";
             td.style.textAlign="center";
-            td.style.width="20px ";
+            td.style.width="20px";
             td.style.height="20px";
-            td.style.setProperty("border","1","important");;
+            // td.style.setProperty("border","1","important");;
             td.id=i+","+j; // pl: 0,0
             
             td.onclick = function(){EmberMozgas(i,j,map)};
             if(map[i][j]==1 ||map[i][j]==2){
-                td.style.backgroundColor="red";
+                td.style.backgroundColor="gray";
                 if(map[i][j]==2){
-                    td.innerHTML="X";
+                  // td.innerHTML="X";
                 }
             }
             else if(map[i][j]==3 || map[i][j]==4){
@@ -207,7 +207,7 @@ function MapGenerate(map){
     btn.onclick = function(){ExtraHelp(map)};
     btn.innerHTML="Extra help";
     matrix.appendChild(btn);
-    var lkme = document.createElement("p");
+    var lkme = document.createElement("p");//legkozelebbi mozag erzekelo
     lkme.innerHTML="Legközelebbi mozgás érzékelő: ";
     lkme.id="LKME";
     lkmeDiv.appendChild(lkme);
