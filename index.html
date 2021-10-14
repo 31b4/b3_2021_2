@@ -5,8 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>demo</title>
-    <script src="run.js"></script>
+
     <link rel="stylesheet" href="style.css">
+    <script src="run.js"></script>
 </head>
 <body>
     <div id="cim">
@@ -14,11 +15,13 @@
     </div>
     <div id="mainbox">
         <div class="row">
-            <div class="col"><button onclick=MapGenerate(map1)>lvl 1</button></div>
-            <div class="col"><button onclick=MapGenerate(map2)>lvl 2</button></div>
             <div class="col"><button onclick=Valami() style="width: 84px;">Utmutató</button></div>
-            <div class="col"><button onclick=MapGenerate(map3)>lvl 3</button></div>
-            <div class="col"><button onclick=MapGenerate(map4)>lvl 4</button></div>
+        </div>
+        <div class="row">
+            <div class="col"><button id="idmap1" onclick="MapGenerate(map1,'idmap1');" >lvl 1</button></div>
+            <div class="col"><button id="idmap2" onclick="MapGenerate(map2,'idmap2');">lvl 2</button></div>
+            <div class="col"><button id="idmap3" onclick="MapGenerate(map3,'idmap3');">lvl 3</button></div>
+            <div class="col"><button id="idmap4" onclick="MapGenerate(map4,'idmap4');">lvl 4</button></div>
         </div>
         <div id="LKMEdiv"></div>
         <div id="matrix">

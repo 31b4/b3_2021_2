@@ -29,8 +29,26 @@ div#matrix{
     display: flex;
     align-items: center;
     text-align: center;
+    border-radius: 5px;
+    border-style: outset;
+    background-color: #EFEFEF;
+    color: black;
+    border-color: black;
+}
+#mainbox button:hover{
+    background-color: #001630 !important;
+    color: #EFEFEF !important;
+    border-color: whitesmoke;
 }
 #mainbox p{
     text-align: center;
     font: 20px "Roboto Mono", monospace;
+}
+.row{
+    text-align: center;
+}
+.col{
+    display: inline-block;
+    vertical-align: middle;
+    padding: 15px;
 }

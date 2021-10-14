@@ -166,11 +166,22 @@ function Restart(){
         document.getElementById("xtrBTN").remove();
     }
 }
-function MapGenerate(map){
+
+function GombSzinezes(idmap) {
+    for (let i = 1; i <= 4; i++) {
+        document.getElementById("idmap"+i).style.backgroundColor="#EFEFEF";
+        document.getElementById("idmap"+i).style.color="black";
+    }
+    document.getElementById(idmap).style.backgroundColor="#001630";
+    document.getElementById(idmap).style.color="whitesmoke";
+} 
+
+function MapGenerate(map,idmap){
     var matrix = document.getElementById("matrix");
     var table = document.getElementById("table");
     var lkmeDiv = document.getElementById("LKMEdiv");
     Restart();
+    GombSzinezes(idmap);
     for (let i = 0; i < 12; i++) {
         var tr = document.createElement("tr");
         for (let j = 0; j < 12; j++) {
@@ -181,7 +192,6 @@ function MapGenerate(map){
             td.style.height="20px";
             // td.style.setProperty("border","1","important");;
             td.id=i+","+j; // pl: 0,0
-            
             td.onclick = function(){EmberMozgas(i,j,map)};
             if(map[i][j]==1 ||map[i][j]==2){
                 td.style.backgroundColor="gray";
@@ -213,6 +223,8 @@ function MapGenerate(map){
     lkmeDiv.appendChild(lkme);
     LkSzenzorTavolsag(LegkozelebbiSzenzor(map));
 }
+
 function Valami(){
     console.log("hamarosan kész...");
+    document.getElementById().innerHTML="A mozgáshoz kattints rá egy szomszédos mezőre."+ "\n" +" Ha bele érsz egy érzékelő sugarába a játék leáll. Az érzékelő minden irányba egy mezőre távolságra képes érzékelni"+"\n"+"Így ha érzékelők figyelő 2 es távolságot jelez olyankor már érdemes átgondolni hogy merre indulsz. Esetleg ha még nem használtad fel az extra segítséget akkor érdem azt felhasználni.    ";
 }
