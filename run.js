@@ -56,9 +56,11 @@ var map4 = [
 ];
 var emberPos=[11,0];
 var lepesek=0;
+MapGenerate(map1,"idmap1");
 function ExtraHelp(map){
     var szensorPos = LegkozelebbiSzenzor(map)
-    document.getElementById(szensorPos[0]+","+szensorPos[1]).style.backgroundColor="blue";
+    document.getElementById(szensorPos[0]+","+szensorPos[1]).style.backgroundColor="#107dac";
+    document.getElementById(szensorPos[0]+","+szensorPos[1]).innerHTML="X";
     document.getElementById("xtrBTN").remove();
 }
 function LkSzenzorTavolsag(szensorPos){// kiszamolja myilen mennsze van a legkozelebbi szenzor
@@ -216,6 +218,7 @@ function MapGenerate(map,idmap){
     btn.id="xtrBTN";
     btn.onclick = function(){ExtraHelp(map)};
     btn.innerHTML="Extra help";
+    btn.style.marginTop="20px";
     matrix.appendChild(btn);
     var lkme = document.createElement("p");//legkozelebbi mozag erzekelo
     lkme.innerHTML="Legközelebbi mozgás érzékelő: ";
@@ -225,6 +228,13 @@ function MapGenerate(map,idmap){
 }
 
 function Valami(){
-    console.log("hamarosan kész...");
-    document.getElementById().innerHTML="A mozgáshoz kattints rá egy szomszédos mezőre."+ "\n" +" Ha bele érsz egy érzékelő sugarába a játék leáll. Az érzékelő minden irányba egy mezőre távolságra képes érzékelni"+"\n"+"Így ha érzékelők figyelő 2 es távolságot jelez olyankor már érdemes átgondolni hogy merre indulsz. Esetleg ha még nem használtad fel az extra segítséget akkor érdem azt felhasználni.    ";
+    if (document.getElementById("p").textContent == "") {
+        document.getElementById("p").innerHTML="A mozgáshoz kattints rá egy szomszédos mezőre."+ "\n" +" Ha bele érsz egy érzékelő sugarába a játék leáll. Az érzékelő minden irányba egy mezőre távolságra képes érzékelni"+"\n"+"Így ha érzékelők figyelő 2 es távolságot jelez olyankor már érdemes átgondolni hogy merre indulsz. Esetleg ha még nem használtad fel az extra segítséget akkor érdem azt felhasználni.    ";
+        document.getElementById("mainbox").style.height="900px";
+    }else {
+        document.getElementById("p").innerHTML="";
+        document.getElementById("mainbox").style.height="700px";
+    }
+    
+    
 }
