@@ -63,14 +63,14 @@ function ExtraHelp(map){
     document.getElementById(szensorPos[0]+","+szensorPos[1]).innerHTML="X";
     document.getElementById("xtrBTN").remove();
 }
-function LkSzenzorTavolsag(szensorPos){// kiszamolja myilen mennsze van a legkozelebbi szenzor
+function LkSzenzorTavolsag(vizsgalPos){// kiszamolja myilen mennsze van a legkozelebbi szenzor
     var tav;
-    var yKul=Math.abs(emberPos[0]-szensorPos[0]);
-    var xKul=Math.abs(emberPos[1]-szensorPos[1]);
-    if (szensorPos[0]==emberPos[0]) {
+    var yKul=Math.abs(emberPos[0]-vizsgalPos[0]);
+    var xKul=Math.abs(emberPos[1]-vizsgalPos[1]);
+    if (vizsgalPos[0]==emberPos[0]) {
         tav = xKul;
     }
-    else if(szensorPos[1]==emberPos[1]){
+    else if(vizsgalPos[1]==emberPos[1]){
         tav = yKul;
     }
     else if (xKul <= yKul) {
@@ -80,7 +80,10 @@ function LkSzenzorTavolsag(szensorPos){// kiszamolja myilen mennsze van a legkoz
         tav = xKul;
     }
     console.log("tav: "+ tav)
-    document.getElementById("LKME").innerHTML="Legközelebbi mozgás érzékelő: "+ tav;
+    if (tav>1) {
+        document.getElementById("LKME").innerHTML="Legközelebbi mozgás érzékelő: "+ tav;
+    }
+    return tav;
 }
 function HatarSensVizsg(y,x,map){
     if(x>=0&&x<12&&y>=0&&y<12){
@@ -89,6 +92,9 @@ function HatarSensVizsg(y,x,map){
         }
     }
     return false;
+}
+function JobbLeBalFel(y,x,i,map) {
+    //ures
 }
 function LegkozelebbiSzenzor(map){// megkeresi a legkozelebbi szenzor kordinatajat pl:[3,8]
     var szensorPos;
@@ -135,10 +141,9 @@ function LegkozelebbiSzenzor(map){// megkeresi a legkozelebbi szenzor kordinataj
 function EmberMozgas(y,x,map){
     var ey=emberPos[0];
     var ex=emberPos[1];
-    // console.log(y+","+y)
-    if(y==ey-1&&x==ex || y==ey-1&&x==ex+1 || y==ey&&x==ex+1 || y == ey+1&&x==ex+1 || y==ey+1 && x==ex || y==ey+1&&x==ex-1||y==ey&&x==ex-1||y==ey-1&&x==ex-1){
-        lepesek++;// maradekos osztassal megcsinalni vagy mint az aknakereso
-        // console.log("valid");
+    var vizsgalpos=[y,x];
+    if(LkSzenzorTavolsag(vizsgalpos)==1){
+        lepesek++;
         var voltPos = document.getElementById(ey+","+ex);
         voltPos.innerHTML="";
         if(map[y][x]==1){
@@ -166,6 +171,10 @@ function Restart(){
     }
     if (document.getElementById("xtrBTN")!=null) {
         document.getElementById("xtrBTN").remove();
+    }
+    for (let i = 1; i <= 4; i++) {
+        document.getElementById("idmap"+i).style.backgroundColor="#EFEFEF";
+        document.getElementById("idmap"+i).style.color="black";
     }
 }
 
@@ -220,7 +229,7 @@ function MapGenerate(map,idmap){
     btn.innerHTML="Extra help";
     btn.style.marginTop="20px";
     matrix.appendChild(btn);
-    var lkme = document.createElement("p");//legkozelebbi mozag erzekelo
+    var lkme = document.createElement("p");//lkme = legkozelebbi mozgas erzekelo
     lkme.innerHTML="Legközelebbi mozgás érzékelő: ";
     lkme.id="LKME";
     lkmeDiv.appendChild(lkme);
@@ -229,12 +238,10 @@ function MapGenerate(map,idmap){
 
 function Valami(){
     if (document.getElementById("p").textContent == "") {
-        document.getElementById("p").innerHTML="A mozgáshoz kattints rá egy szomszédos mezőre, akár átlósan is. Ha bele érsz egy érzékelő sugarába a játék leáll. Az érzékelő minden irányba egy mező távolságra képes érzékelni, így ha mozgás érzékelő érzékelő 2 es távolságot jelez, olyankor már érdemes átgondolni hogy merre indulsz. Az Extra segítségével megtudhatod hogy hol van a legközelebbi érzékelő, vigyázz csak egyszer használhatod, jó játékot!";
+        document.getElementById("p").innerHTML="A mozgáshoz kattints rá egy szomszédos mezőre, akár átlósan is. Ha beleérsz egy érzékelő sugarába a játék leáll. Az érzékelő minden irányba egy mező távolságra képes érzékelni, így ha mozgás érzékelő érzékelő 2 es távolságot jelez, olyankor már érdemes átgondolni hogy merre indulsz. Az Extra segítségével megtudhatod hogy hol van a legközelebbi érzékelő, vigyázz csak egyszer használhatod, jó játékot!";
         document.getElementById("mainbox").style.height="900px";
     }else {
         document.getElementById("p").innerHTML="";
         document.getElementById("mainbox").style.height="700px";
     }
-    
-    
 }
