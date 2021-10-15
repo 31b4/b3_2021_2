@@ -236,9 +236,9 @@ function MapGenerate(map,idmap){
     LkSzenzorTavolsag(LegkozelebbiSzenzor(map));
 }
 
-function Valami(){
+function Utmutato(){
     if (document.getElementById("p").textContent == "") {
-        document.getElementById("p").innerHTML="A mozgáshoz kattints rá egy szomszédos mezőre, akár átlósan is. Ha beleérsz egy érzékelő sugarába a játék leáll. Az érzékelő minden irányba egy mező távolságra képes érzékelni, így ha mozgás érzékelő érzékelő 2 es távolságot jelez, olyankor már érdemes átgondolni hogy merre indulsz. Az Extra segítségével megtudhatod hogy hol van a legközelebbi érzékelő, vigyázz csak egyszer használhatod, jó játékot!";
+        document.getElementById("p").innerHTML="A mozgáshoz kattints rá egy szomszédos mezőre, akár átlósan is. Ha beleérsz egy érzékelő sugarába a játék leáll. Az érzékelő minden irányba egy mező távolságra képes érzékelni, így ha mozgás érzékelő érzékelő 2 es távolságot jelez, olyankor már érdemes átgondolni hogy merre indulsz. Az Extra segítséggel megtudhatod hogy hol van a legközelebbi érzékelő, vigyázz csak egyszer használhatod, jó játékot!";
         document.getElementById("mainbox").style.height="900px";
     }else {
         document.getElementById("p").innerHTML="";
