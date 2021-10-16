@@ -57,14 +57,15 @@ var map4 = [
 var emberPos=[11,0];
 var lepesek=0;
 MapGenerate(map1,"idmap1");
+
 function ExtraHelp(map){
     var szensorPos = LegkozelebbiSzenzor(map)
     document.getElementById(szensorPos[0]+","+szensorPos[1]).style.backgroundColor="#107dac";
     document.getElementById(szensorPos[0]+","+szensorPos[1]).innerHTML="X";
     document.getElementById("xtrBTN").remove();
 }
-function LkSzenzorTavolsag(vizsgalPos){// kiszamolja myilen mennsze van a legkozelebbi szenzor
-    var tav;
+function LkSzenzorTavolsag(vizsgalPos,check){// kiszamolja myilen mennsze van a legkozelebbi szenzor
+    var tav;// ha check igaz akkor ki kell irni a tavot
     var yKul=Math.abs(emberPos[0]-vizsgalPos[0]);
     var xKul=Math.abs(emberPos[1]-vizsgalPos[1]);
     if (vizsgalPos[0]==emberPos[0]) {
@@ -80,7 +81,7 @@ function LkSzenzorTavolsag(vizsgalPos){// kiszamolja myilen mennsze van a legkoz
         tav = xKul;
     }
     console.log("tav: "+ tav)
-    if (tav>1) {
+    if (check) {
         document.getElementById("LKME").innerHTML="Legközelebbi mozgás érzékelő: "+ tav;
     }
     return tav;
@@ -138,34 +139,64 @@ function LegkozelebbiSzenzor(map){// megkeresi a legkozelebbi szenzor kordinataj
         }
     }
 }
-function EmberMozgas(y,x,map){
+function EmberMozgas(y,x,map,idmap){
     var ey=emberPos[0];
     var ex=emberPos[1];
     var vizsgalpos=[y,x];
-    if(LkSzenzorTavolsag(vizsgalpos)==1){
+    if(LkSzenzorTavolsag(vizsgalpos,false)==1){
         lepesek++;
         var voltPos = document.getElementById(ey+","+ex);
         voltPos.innerHTML="";
         if(map[y][x]==1){
             alert("Beriasztott az épület, mindössze "+lepesek+" lépést sikerült megtenni :(");
             Restart();
+            MapGenerate(map,idmap);
             return;
         }
         else if(map[y][x]==4){
-            alert("Gratulálok, feltünés nélkül bejutottál a szerver szobába, mindössze "+lepesek+" lépésből!");
-            Restart();
+            if (idmap=="idmap4") {
+                var svLepesek = lepesek;
+                Restart();
+                matrix = document.getElementById("matrix");
+                document.getElementById("nehezPalya").innerHTML="Gratulálok sikerült kivinned a legnehezebb pályát "+svLepesek +" lépésből";
+                kep = document.createElement("img");
+                kep.src="img/grat.png";
+                kep.style.display="block";
+                kep.style.marginLeft="auto";
+                kep.style.marginRight="auto";
+                kep.style.width="200px";
+                matrix.appendChild(kep);
+                return;
+            }else {
+                alert("Gratulálok, feltünés nélkül bejutottál a szerver szobába, mindössze "+lepesek+" lépésből, jöhet a következő pálya!");
+                var idmapNum = idmap.substring( idmap.length - 1, idmap.length);
+                if (idmapNum==1) {
+                    MapGenerate(map2,"idmap2")
+                    return;
+                }
+                else if(idmapNum==2){
+                    MapGenerate(map3,"idmap3")
+                    return;
+                }
+                else if(idmapNum==3){
+                    MapGenerate(map4,"idmap4")
+                    return;
+                }
+            }
             return;
         }
         emberPos=[y,x]
         var ujPos = document.getElementById(y+","+x);
         ujPos.innerHTML=":)"
-        LkSzenzorTavolsag(LegkozelebbiSzenzor(map));
+        LkSzenzorTavolsag(LegkozelebbiSzenzor(map),true);
     }
 }
 function Restart(){
     lepesek=0;
     emberPos=[11,0];
     document.getElementById("table").innerHTML="";
+    document.getElementById("nehezPalya").innerHTML="";
+
     if (document.getElementById("LKME")!=null) {
         document.getElementById("LKME").remove();
     }
@@ -203,7 +234,7 @@ function MapGenerate(map,idmap){
             td.style.height="20px";
             // td.style.setProperty("border","1","important");;
             td.id=i+","+j; // pl: 0,0
-            td.onclick = function(){EmberMozgas(i,j,map)};
+            td.onclick = function(){EmberMozgas(i,j,map,idmap)};
             if(map[i][j]==1 ||map[i][j]==2){
                 td.style.backgroundColor="gray";
                 if(map[i][j]==2){
@@ -233,7 +264,7 @@ function MapGenerate(map,idmap){
     lkme.innerHTML="Legközelebbi mozgás érzékelő: ";
     lkme.id="LKME";
     lkmeDiv.appendChild(lkme);
-    LkSzenzorTavolsag(LegkozelebbiSzenzor(map));
+    LkSzenzorTavolsag(LegkozelebbiSzenzor(map),true);
 }
 
 function Utmutato(){
@@ -245,3 +276,6 @@ function Utmutato(){
         document.getElementById("mainbox").style.height="700px";
     }
 }
+
+
+
