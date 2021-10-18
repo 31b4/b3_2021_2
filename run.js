@@ -198,7 +198,7 @@ function Restart(){
     document.getElementById("table").innerHTML="";
     document.getElementById("nehezPalya").innerHTML="";
     if (document.getElementById("gratKep")!=null) {
-        document.getElementById("gratKep").innerHTML="";
+        document.getElementById("gratKep").remove();
     }
     if (document.getElementById("LKME")!=null) {
         document.getElementById("LKME").remove();
