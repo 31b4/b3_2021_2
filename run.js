@@ -165,6 +165,7 @@ function EmberMozgas(y,x,map,idmap){
                 kep.style.marginLeft="auto";
                 kep.style.marginRight="auto";
                 kep.style.width="200px";
+                kep.id="gratKep";
                 matrix.appendChild(kep);
                 return;
             }else {
@@ -196,7 +197,9 @@ function Restart(){
     emberPos=[11,0];
     document.getElementById("table").innerHTML="";
     document.getElementById("nehezPalya").innerHTML="";
-
+    if (document.getElementById("gratKep")!=null) {
+        document.getElementById("gratKep").innerHTML="";
+    }
     if (document.getElementById("LKME")!=null) {
         document.getElementById("LKME").remove();
     }
