@@ -83,6 +83,15 @@ function LkSzenzorTavolsag(vizsgalPos,check){// kiszamolja myilen mennsze van a 
     console.log("tav: "+ tav)
     if (check) {
         document.getElementById("LKME").innerHTML="Legközelebbi mozgás érzékelő: "+ tav;
+        if (tav==2) {
+            document.getElementById(emberPos[0]+","+emberPos[1]).innerHTML=":(";
+        }else if(tav == 3){
+            document.getElementById(emberPos[0]+","+emberPos[1]).innerHTML=":|";
+        }else if(tav==4){
+            document.getElementById(emberPos[0]+","+emberPos[1]).innerHTML=":)";
+        }else if(tav>4){
+            document.getElementById(emberPos[0]+","+emberPos[1]).innerHTML=":D";
+        }
     }
     return tav;
 }
@@ -187,8 +196,6 @@ function EmberMozgas(y,x,map,idmap){
             return;
         }
         emberPos=[y,x]
-        var ujPos = document.getElementById(y+","+x);
-        ujPos.innerHTML=":)"
         LkSzenzorTavolsag(LegkozelebbiSzenzor(map),true);
     }
 }
